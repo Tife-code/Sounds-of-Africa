@@ -145,3 +145,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   changeColor: {fileID: 1813726192289853451}
+  scoreValue: 1
+  speed: 600
+  touchSound: {fileID: 0}

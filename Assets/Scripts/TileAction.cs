@@ -7,13 +7,34 @@ public class TileAction : MonoBehaviour
 {
     public SpriteRenderer changeColor;
     public int scoreValue = 1;
+    private Rigidbody2D tileRb;
+    public float speed = 500f;
+    public AudioClip touchSound;
+    private int i = 1;
+    private bool isClick = false;
+
+    public void Update()
+    {
+        tileRb = GetComponent<Rigidbody2D>();
+        tileRb.velocity = new Vector3(0, -speed * Time.deltaTime, 0);
+        if (FindObjectOfType<Score>().scoree > i * 10){
+            speed += 100;
+            i++;
+        }
+
+    }
 
     private void OnMouseOver()
     {
-        if (Input.GetMouseButtonDown(0))
+        if(isClick == false)
         {
-            changeColor.color = Color.yellow;
-            FindObjectOfType<Score>().ScoreUpdate(scoreValue);
+            if (Input.GetMouseButtonDown(0))
+            {
+                changeColor.color = Color.yellow;
+                FindObjectOfType<Score>().ScoreUpdate(scoreValue);
+                //touchSound.p
+                isClick = true;
+            }
         }
         
     }
@@ -22,7 +43,7 @@ public class TileAction : MonoBehaviour
     {
         if(changeColor.color == Color.yellow)
         {
-            Debug.Log("you are fine");
+            //Debug.Log("you are fine");
         }
         else if (collision.gameObject.tag == "border")
         {

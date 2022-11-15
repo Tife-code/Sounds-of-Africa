@@ -6,7 +6,7 @@ public class spawnerAction : MonoBehaviour
 {
     public float width = 10f, height = 5f;
     public GameObject PianoTile;
-    public float delay = 0.5f;
+    public float delay = 0.5f, min = -5, max = 10;
 
     // Start is called before the first frame update
     void Start()
@@ -27,22 +27,16 @@ public class spawnerAction : MonoBehaviour
         }
     }
 
-    void Spawner()
-    {
-        foreach (Transform child in transform)
-        {
-            GameObject Piano = Instantiate(PianoTile, child.position, Quaternion.identity);
-            Piano.transform.parent = child;
-
-        }
-    }
 
     void SpawnUntil()
     {
         Transform position = freePosition();
+        float rand = Random.Range(min, max);
+        Vector3 offset = new Vector3(0, rand, 0);
+
         if (position)
         {
-            GameObject Piano = Instantiate(PianoTile, position.transform.position, Quaternion.identity);
+            GameObject Piano = Instantiate(PianoTile, position.transform.position + offset , Quaternion.identity);
             Piano.transform.parent = position;
         }
         if (freePosition())
@@ -50,6 +44,7 @@ public class spawnerAction : MonoBehaviour
             Invoke("SpawnUntil", delay);
         }
     }
+
 
     bool CheckforEmpty()
     {
